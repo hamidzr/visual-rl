@@ -3,7 +3,7 @@
 class Game {
   constructor(opts) {
     console.log('creating game driver');
-    this._test();
+    // TODO test the interface
   }
 
   get state() {
@@ -32,3 +32,5 @@ class Game {
     console.assert(this.state() instanceof tf.Tensor || Array.isArray(this.state()), 'state is not formatted properly');
   }
 }
+
+module.exports = Game;

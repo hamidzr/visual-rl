@@ -1,23 +1,28 @@
+const assert = require('assert'),
+  Game = require('./Game.js');
+
 const TERMINAL_SYMBOL='[T]';
 const PLAYER_SYMBOL='[P]';
 const EMPTY_SYMBOL='[ ]';
 
 class GridWorld extends Game {
   constructor(rows=4, columns=4) {
-    for (let i = 0; i < columns; ++i) {
-    }
-    
-    this.grid = [[EMPTY_SYMBOL for i in range(0, columns)] for item in range(0, rows)]
+    super();
+
+    this.grid = Array(rows).fill(null).map(() => {
+      return Array(columns).fill(EMPTY_SYMBOL);
+    });
+
     this.rows = rows;
     this.columns = columns;
     this.terminalCells = [];
 
     // put player at init location
-    this._pLoc = (rows-1, columns-1)
-    this._setPlayerAt(rows-1, 0)
+    this._pLoc = [rows-1, columns-1];
+    this._setPlayerAt(rows-1, 0);
 
-    this._markCellTerminal(0, 0)
-    this._markCellTerminal(rows-1, columns-1)
+    this._markCellTerminal(0, 0);
+    this._markCellTerminal(rows-1, columns-1);
   }
 
   _markCellTerminal(row, column) {
@@ -25,17 +30,19 @@ class GridWorld extends Game {
     // TODO no tuples in js, add list instead to the terminalCells?
     for (let i = 0; i < this.terminalCells.length; ++i) {
       if (this.terminalCells[i][0] === row && this.terminalCells[i][1] === column) {
-      // Maintain uniqueness of (row,column) in terminalCells
-      return;
-    }
+        // Maintain uniqueness of (row,column) in terminalCells
+        return;
+      }
       this.terminalCells.push([row, column]);
+    }
   }
 
   _setPlayerAt(row, column) {
     // TODO validation checks?
-    if (row > this.rows-1 || column > this.columns-1 or row < 0 or column < 0):
+    if (row > this.rows-1 || column > this.columns-1 || row < 0 || column < 0) {
       throw new Error(`invalid location ${row} ${column}`);
-    this._pLoc = (row, column);
+    }
+    this._pLoc = [row, column];
   }
 
   _isOver() {
@@ -59,7 +66,7 @@ class GridWorld extends Game {
     for (let i = 0; i < this.grid.length; ++i) {
       for (let j = 0; i < grid[i].length; ++j) {
         let symbol = this.grid[i][j];
-        if (i == this._pLoc[0] && j = this._pLoc[1]) {
+        if (i == this._pLoc[0] && j == this._pLoc[1]) {
           symbol = PLAYER_SYMBOL;
         }
         console.log(symbol);
@@ -81,10 +88,10 @@ class GridWorld extends Game {
 
     // CHECK
     try {
-      if action == 0: self._setPlayerAt(y-1, x)
-      if action == 1: self._setPlayerAt(y+1, x)
-      if action == 2: self._setPlayerAt(y, x+1)
-      if action == 3: self._setPlayerAt(y, x-1)
+      if (action == 0) self._setPlayerAt(y-1, x);
+      if (action == 1) self._setPlayerAt(y+1, x);
+      if (action == 2) self._setPlayerAt(y, x+1);
+      if (action == 3) self._setPlayerAt(y, x-1);
     } catch (e) {
       // stay in the same cell
     }
@@ -97,16 +104,18 @@ class GridWorld extends Game {
     let is_over = this._isOver();
     if (is_over)
       reward = +1;
-    return [reward, is_over]
+    return [reward, is_over];
   }
 }
 
 
-if __name__ == '__main__':
-  g = GridWorld()
-  assert(g.state() == 12)
-  g.act(0)
-  assert(g.state() == 8)
-  g.act(2)
-  assert(g.state() == 9)
-  g.show()
+g = new GridWorld();
+assert(g.state() == 12);
+g.act(0);
+assert(g.state() == 8);
+g.act(2);
+assert(g.state() == 9);
+g.show();
+
+
+module.exports = GridWorld;
