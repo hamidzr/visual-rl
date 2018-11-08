@@ -1,4 +1,4 @@
-class QLearner {
+class TabularQLearner {
   constructor(action_size, state_size, discount_factor=0.9, update_rate=0.1, epsilon=0.2) {
     // QUESTION should I have it this way or rotated?
     // Create qTable and fill with random numbers
@@ -61,7 +61,7 @@ class QLearner {
   }
 }
 
-class Agent {
+class Player {
   constructor(qLearner, game) {
     this.ql = qLearner;
     this.game = game;
@@ -95,3 +95,8 @@ class Agent {
     return n_ep_reward;
   }
 }
+
+module.exports = {
+  Player,
+  TabularQLearner,
+};
