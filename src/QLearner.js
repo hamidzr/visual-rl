@@ -61,42 +61,4 @@ class TabularQLearner {
   }
 }
 
-class Player {
-  constructor(qLearner, game) {
-    this.ql = qLearner;
-    this.game = game;
-  }
-
-  play_episode() {
-    this.game.reset();
-    var state = this.game.state();
-    var is_over = False;
-    var ep_reward = 0;
-
-    while (!is_over) {
-      const action = this.ql.act(state);
-      this.game.act(action);
-      const next_state = this.game.state();
-      var rewrd_isover_array = this.game.feedback();
-      reward = reward_isover_array[0];
-      is_over = reward_isover_array[1];
-      this.ql.update(state, action, reward, next_state);
-      state = next_state;
-      ep_reward += reward;
-    }
-    return ep_reward;
-  }
-
-  play_n_episodes(n) {
-    var n_ep_reward = 0;
-    for (var episode = 0; episode < n; ++episode) {
-      n_ep_reward += this.play_episode();
-    }
-    return n_ep_reward;
-  }
-}
-
-module.exports = {
-  Player,
-  TabularQLearner,
-};
+module.exports = TabularQLearner;
