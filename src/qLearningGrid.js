@@ -1,7 +1,7 @@
 // learns to play the grid world game using a tabular qlearner
 
 const GridWorld = require('./environments/gridWorld.js'),
-  TabularQLeaner = require('./QLearner.js'),
+  TabularQLeaner = require('./TabularQLAgent.js'),
   Player = require('./Player.js');
 
 const ROWS=4;
