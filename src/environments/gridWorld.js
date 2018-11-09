@@ -1,4 +1,5 @@
 const assert = require('assert'),
+  utils = require('../utils'),
   Game = require('./Game.js');
 
 // TODO rename cols to cols
@@ -22,14 +23,12 @@ class GridWorld extends Game {
   }
 
   _markCellTerminal(row, col) {
-    this.grid[row][col] = TERMINAL_SYMBOL;
-    // TODO no tuples in js, add list instead to the terminalCells?
-    for (let i = 0; i < this.terminalCells.length; ++i) {
-      if (this.terminalCells[i][0] === row && this.terminalCells[i][1] === col) {
-        // Maintain uniqueness of (row,col) in terminalCells
-        return;
-      }
+    console.log(`marking ${row}, ${col} terminal`);
+
+    // if it's not already marked as terminal mark it
+    if (!this.terminalCells.find(cell => utils.areEqual(cell, [row, col]))) {
       this.terminalCells.push([row, col]);
+      this.grid[row][col] = TERMINAL_SYMBOL;
     }
   }
 
@@ -42,12 +41,10 @@ class GridWorld extends Game {
   }
 
   _isOver() {
-    for (let i = 0; i < this.terminalCells.length; ++i) {
-      if (this._pLoc[0] === this.terminalCells[i][0] && this._pLoc[1] === this.terminalCells[i][1]) {
-        return true;
-      }
-    }
-    return false;
+    console.log('cur terminal states', this.terminalCells, 'cur location', this._pLoc );
+    let matchingTCell = this.terminalCells.find(terminalCell => utils.areEqual(terminalCell, this._pLoc));
+    console.log('matched', matchingTCell);
+    return !!matchingTCell;
   }
 
   state() {
