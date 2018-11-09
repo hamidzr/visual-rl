@@ -11,7 +11,7 @@ const ACTIONS=4;
 const STATE_SIZE=ROWS*COLUMNS;
 
 // setup the game
-game = GridWorld(ROWS, COLUMNS);
+game = new GridWorld(ROWS, COLUMNS);
 
 
 function run_experiment(simulation_fn, simulation_count) {
@@ -39,21 +39,27 @@ function experiment1_simulation() {
   // runs a simulation for experiment one
 
   // setup the qlearner
-  ql = QLearner(STATE_SIZE, ACTIONS, 0.9, 0.1, 0.25);
-  agent = Agent(ql, game);
+  const agent = new TabularQLeaner({
+    stateSize: STATE_SIZE,
+    actionSize: ACTIONS,
+    discountRate: 0.9,
+    updateRate: 0.1,
+    epsilon: 0.25,
+  });
 
+  const player = new Player(agent, game);
 
   // set q(s,a) for terminal states to 0 # WHY?
   TERMINAL_STATES = [0, STATE_SIZE-1];
   TERMINAL_STATES.forEach(state => {
-    for (let act=0; act < ql.action_size; act++) {
-      ql._setQ(state, act, 0);
+    for (let act=0; act < agent.action_size; act++) {
+      agent._setQ(state, act, 0);
     }
   });
 
 
   rewards_history = [];
-  playResults = agent.play_n_episodes(EXP1_EPISODES);
+  playResults = player.play_n_episodes(EXP1_EPISODES);
   rewards_history.push(playResults);
   return rewards_history;
 }
