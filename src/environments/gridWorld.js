@@ -1,6 +1,8 @@
 const assert = require('assert'),
   Game = require('./Game.js');
 
+// TODO rename columns to cols
+
 const TERMINAL_SYMBOL='[T]';
 const PLAYER_SYMBOL='[P]';
 const EMPTY_SYMBOL='[ ]';
@@ -15,14 +17,8 @@ class GridWorld extends Game {
 
     this.rows = rows;
     this.columns = columns;
-    this.terminalCells = [];
 
-    // put player at init location
-    this._pLoc = [rows-1, columns-1];
-    this._setPlayerAt(rows-1, 0);
-
-    this._markCellTerminal(0, 0);
-    this._markCellTerminal(rows-1, columns-1);
+    this.reset();
   }
 
   _markCellTerminal(row, column) {
@@ -75,16 +71,28 @@ class GridWorld extends Game {
     }
   }
 
+  // initializes or resets the game
   reset() {
     // TODO syntax check
-    this.constructor(this.grid.length, this.grid[0].length);
+
+    const rows = this.rows;
+    const columns = this.columns;
+
+    this.terminalCells = [];
+
+    // put player at init location
+    this._pLoc = [rows-1, columns-1];
+    this._setPlayerAt(rows-1, 0);
+
+    this._markCellTerminal(0, 0);
+    this._markCellTerminal(rows-1, columns-1);
   }
 
   // 0, 1, 2, 3 = up, down, right, left
   act(action) {
     let y = this._pLoc[0];
     let x = this._pLoc[1];
-    
+
 
     // CHECK
     try {
