@@ -8,19 +8,20 @@ class Player {
   play_episode() {
     this.game.reset();
     var state = this.game.state();
-    var is_over = False;
+    var is_over = false;
     var ep_rewards = [];
 
     while (!is_over) {
       const action = this.ql.act(state);
       this.game.act(action);
       const next_state = this.game.state();
-      var rewrd_isover_array = this.game.feedback();
-      reward = reward_isover_array[0];
-      is_over = reward_isover_array[1];
+      var reward_isover_array = this.game.feedback();
+      let reward = reward_isover_array[0];
+      let is_over = reward_isover_array[1];
       this.ql.update(state, action, reward, next_state);
       state = next_state;
       ep_rewards.push(reward);
+      // FIXME game is never over
     }
     return ep_rewards;
   }
