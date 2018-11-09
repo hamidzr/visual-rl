@@ -59,7 +59,7 @@ class GridWorld extends Game {
 
   show() {
     for (let i = 0; i < this.grid.length; ++i) {
-      let disp_line = "";
+      let disp_line = '';
       for (let j = 0; j < this.grid[i].length; ++j) {
         let symbol = this.grid[i][j];
         if (i == this._pLoc[0] && j == this._pLoc[1]) {

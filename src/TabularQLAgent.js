@@ -17,7 +17,7 @@ class TabularQLearner {
     // Create qTable and fill with random numbers
     this._qTable = [];
     for (var state = 0; state < opts.stateSize; ++state) {
-      var action_array = [];
+      let action_array = [];
       for (var action = 0; action < opts.actionSize; ++action) {
         action_array.push(Math.random());
       }
@@ -49,7 +49,7 @@ class TabularQLearner {
   }
 
   act(state) {
-    var action = null; //null or undefined? Does it matter?
+    let action = null; //null or undefined? Does it matter?
     if (Math.random() <= this.epsilon) {
       action = utils.getRandomInt(this.action_size);
     } else {
