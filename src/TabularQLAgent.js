@@ -57,8 +57,8 @@ class TabularQLearner {
       if (action >= this.action_size || action < 0) {
         throw new Error(`Invalid choice of action: ${action}. Must be between 0 and ${this.action_size - 1} (inclusive)`);
       }
-      return action;
     }
+    return action;
   }
 
   update(state, action, reward, next_state) {
