@@ -61,18 +61,17 @@ class GridWorld extends Game {
     return row * this.columns + col;
   }
 
-  // TODO do we need this show function for js version?
   show() {
     for (let i = 0; i < this.grid.length; ++i) {
-      for (let j = 0; i < grid[i].length; ++j) {
+      let disp_line = "";
+      for (let j = 0; j < this.grid[i].length; ++j) {
         let symbol = this.grid[i][j];
         if (i == this._pLoc[0] && j == this._pLoc[1]) {
           symbol = PLAYER_SYMBOL;
         }
-        console.log(symbol);
+        disp_line += symbol;
       }
-      //TODO Is this wrong when using console.log? Newlines included?
-      console.log('\n');
+      console.log(disp_line);
     }
   }
 
@@ -85,13 +84,14 @@ class GridWorld extends Game {
   act(action) {
     let y = this._pLoc[0];
     let x = this._pLoc[1];
+    
 
     // CHECK
     try {
-      if (action == 0) self._setPlayerAt(y-1, x);
-      if (action == 1) self._setPlayerAt(y+1, x);
-      if (action == 2) self._setPlayerAt(y, x+1);
-      if (action == 3) self._setPlayerAt(y, x-1);
+      if (action == 0) this._setPlayerAt(y-1, x);
+      if (action == 1) this._setPlayerAt(y+1, x);
+      if (action == 2) this._setPlayerAt(y, x+1);
+      if (action == 3) this._setPlayerAt(y, x-1);
     } catch (e) {
       // stay in the same cell
     }
