@@ -11,6 +11,7 @@ const utils = {
     return a;
   },
 
+  // WARN excluding max [0, max)
   getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   },
@@ -93,3 +94,5 @@ const utils = {
   }
 
 };
+
+module.exports = utils;

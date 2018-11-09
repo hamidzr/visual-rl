@@ -1,3 +1,5 @@
+const utils = require('./utils');
+
 class TabularQLearner {
   constructor(opts) {
     const defaults = {
@@ -49,10 +51,10 @@ class TabularQLearner {
   act(state) {
     var action = null; //null or undefined? Does it matter?
     if (Math.random() <= this.epsilon) {
-      action = random.randrange(this.action_size);
+      action = utils.getRandomInt(this.action_size);
     } else {
       action = this.best_action(state);
-      if (action >= this.action_size || action == 0) {
+      if (action >= this.action_size || action < 0) {
         throw new Error(`Invalid choice of action: ${action}. Must be between 0 and ${this.action_size - 1} (inclusive)`);
       }
       return action;
