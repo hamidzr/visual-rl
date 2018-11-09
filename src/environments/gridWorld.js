@@ -12,10 +12,6 @@ class GridWorld extends Game {
   constructor(rows=4, cols=4) {
     super();
 
-    this.grid = Array(rows).fill(null).map(() => {
-      return Array(cols).fill(EMPTY_SYMBOL);
-    });
-
     this.rows = rows;
     this.cols = cols;
 
@@ -23,8 +19,6 @@ class GridWorld extends Game {
   }
 
   _markCellTerminal(row, col) {
-    console.log(`marking ${row}, ${col} terminal`);
-
     // if it's not already marked as terminal mark it
     if (!this.terminalCells.find(cell => utils.areEqual(cell, [row, col]))) {
       this.terminalCells.push([row, col]);
@@ -41,9 +35,7 @@ class GridWorld extends Game {
   }
 
   _isOver() {
-    console.log('cur terminal states', this.terminalCells, 'cur location', this._pLoc );
     let matchingTCell = this.terminalCells.find(terminalCell => utils.areEqual(terminalCell, this._pLoc));
-    console.log('matched', matchingTCell);
     return !!matchingTCell;
   }
 
@@ -75,6 +67,10 @@ class GridWorld extends Game {
     const rows = this.rows;
     const cols = this.cols;
 
+    this.grid = Array(rows).fill(null).map(() => {
+      return Array(cols).fill(EMPTY_SYMBOL);
+    });
+
     this.terminalCells = [];
 
     // put player at init location
@@ -83,6 +79,7 @@ class GridWorld extends Game {
 
     this._markCellTerminal(0, 0);
     this._markCellTerminal(rows-1, cols-1);
+
   }
 
   // 0, 1, 2, 3 = up, down, right, left
@@ -107,8 +104,7 @@ class GridWorld extends Game {
   feedback() {
     let reward = -1;
     let is_over = this._isOver();
-    if (is_over)
-      reward = +1;
+    if (is_over) reward = 0;
     return [reward, is_over];
   }
 }

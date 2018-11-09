@@ -32,7 +32,7 @@ function run_experiment(simulation_fn, simulation_count) {
 
 
 const SIMULATIONS = 5;
-const EXP1_EPISODES = 1e+2;
+const EXP1_EPISODES = 1e+5;
 const EXP2_EPISODES = 1e+2;
 
 function experiment1_simulation() {
@@ -44,7 +44,7 @@ function experiment1_simulation() {
     actionSize: ACTIONS,
     discountRate: 0.9,
     updateRate: 0.1,
-    epsilon: 0.25,
+    epsilon: 0.10,
   });
 
   const player = new Player(agent, game);

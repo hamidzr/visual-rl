@@ -17,11 +17,10 @@ class Player {
       const next_state = this.game.state();
       let reward_isover_array = this.game.feedback();
       let reward = reward_isover_array[0];
-      let is_over = reward_isover_array[1];
+      is_over = reward_isover_array[1];
       this.ql.update(state, action, reward, next_state);
       state = next_state;
       ep_rewards.push(reward);
-      // FIXME game is never over
     }
     return ep_rewards;
   }
@@ -31,7 +30,7 @@ class Player {
     for (var episode = 0; episode < n; ++episode) {
       let epsRewards = this.play_episode();
       n_ep_rewards.push(epsRewards);
-      totalReward = epsRewards.reduce((a, c) => a+c);
+      let totalReward = epsRewards.reduce((a, c) => a+c);
       console.log(`episode ${episode} done with epsilon${this.ql.epsilon} rewards: ${totalReward}`);
     }
     return n_ep_rewards;
