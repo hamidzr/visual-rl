@@ -1,20 +1,31 @@
 class TabularQLearner {
-  constructor(action_size, state_size, discount_factor=0.9, update_rate=0.1, epsilon=0.2) {
+  constructor(opts) {
+    const defaults = {
+      discountRate: 0.95,
+      epsilon: 1,
+      actionSize: undefined,
+      stateSize: undefined,
+      updateRate: 0.1,
+    };
+    opts = {...defaults, ...opts}; // apply the defaults
+
+    console.log('creating tabular qlearning agent', opts);
+
     // QUESTION should I have it this way or rotated?
     // Create qTable and fill with random numbers
     this._qTable = [];
-    for (var state = 0; state < state_size; ++state) {
+    for (var state = 0; state < opts.stateSize; ++state) {
       var action_array = [];
-      for (var action = 0; action < action_size; ++action) {
+      for (var action = 0; action < opts.actionSize; ++action) {
         action_array.push(Math.random());
       }
-        this._qTable.push(action_array);
+      this._qTable.push(action_array);
     }
-    this.state_size = state_size;
-    this.action_size = action_size;
-    this.discount_factor = discount_factor; // gamma
-    this.update_rate = update_rate; // alpha
-    this.epsilon = epsilon;
+    this.state_size = opts.stateSize;
+    this.action_size = opts.actionSize;
+    this.discount_factor = opts.discountRate; // gamma
+    this.update_rate = opts.updateRate; // alpha
+    this.epsilon = opts.epsilon;
   }
 
   // getQ
