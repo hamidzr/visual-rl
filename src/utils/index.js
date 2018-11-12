@@ -11,6 +11,7 @@ const utils = {
     return a;
   },
 
+  // WARN excluding max [0, max)
   getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   },
@@ -32,8 +33,8 @@ const utils = {
       return -1;
     }
 
-    var max = arr[0];
-    var maxIndex = 0;
+    let max = arr[0];
+    let maxIndex = 0;
 
     for (var i = 1; i < arr.length; i++) {
       if (arr[i] > max) {
@@ -46,12 +47,12 @@ const utils = {
   },
 
   download(filename, text) {
-    var pom = document.createElement('a');
+    let pom = document.createElement('a');
     pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     pom.setAttribute('download', filename);
 
     if (document.createEvent) {
-      var event = document.createEvent('MouseEvents');
+      let event = document.createEvent('MouseEvents');
       event.initEvent('click', true, true);
       pom.dispatchEvent(event);
     } else {
@@ -90,6 +91,19 @@ const utils = {
       }
     }
     return new Memory(capacity);
+  },
+
+  // checks array equality
+  areEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+      return false;
+    for(let i = arr1.length; i--;) {
+      if(arr1[i] !== arr2[i])
+        return false;
+    }
+    return true;
   }
 
 };
+
+module.exports = utils;
